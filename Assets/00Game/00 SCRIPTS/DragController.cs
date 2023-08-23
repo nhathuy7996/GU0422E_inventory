@@ -48,19 +48,46 @@ public class DragController : Singleton<DragController>
     {
         if(_movingItem != null)
         {
-            if (_targetSlot == null || _targetSlot.childCount != 0)
-            {
-                _movingItem.transform.SetParent(_parent);
-                _movingItem.transform.localPosition = Vector3.zero;
-            }
-            else
-            {
-                _movingItem.transform.SetParent(_targetSlot);
-                _movingItem.transform.localPosition = Vector3.zero;
-            }
+            CheckTargetSlot();
         }
         _movingItem = null;
         _targetSlot = null;
+
+    }
+
+    void CheckTargetSlot()
+    {
+        if(_targetSlot == null)
+        {
+            _movingItem.transform.SetParent(_parent);
+            _movingItem.transform.localPosition = Vector3.zero;
+            return;
+        }
+
+        ItemInventoryBase itemInSlot = null;
+        if (_targetSlot != null && _targetSlot.childCount != 0)
+            itemInSlot = _targetSlot.GetComponentInChildren<ItemInventoryBase>();
+
+        if(itemInSlot == null)
+        {
+            _movingItem.transform.SetParent(_targetSlot);
+            _movingItem.transform.localPosition = Vector3.zero;
+            return;
+        }
+
+        ItemInventoryBase movingItem = _movingItem.GetComponent<ItemInventoryBase>();
+        if(itemInSlot.quantity + movingItem.quantity <= itemInSlot.maxCapacity)
+        {
+            Destroy(_movingItem.gameObject);
+            itemInSlot.UpdateQuantity(itemInSlot.quantity + movingItem.quantity);
+            return;
+        }
+
+        movingItem.UpdateQuantity((itemInSlot.quantity + movingItem.quantity) - itemInSlot.maxCapacity);
+        itemInSlot.UpdateQuantity(itemInSlot.maxCapacity);
+
+        _movingItem.transform.SetParent(_parent);
+        _movingItem.transform.localPosition = Vector3.zero;
 
     }
 

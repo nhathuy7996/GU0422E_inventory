@@ -25,6 +25,12 @@ public class NormalItem : ItemInventoryBase
         
     }
 
+    public override void UpdateQuantity(int newQuantity)
+    {
+        base.UpdateQuantity(newQuantity);
+        _quantityItem.text = this._quantity.ToString();
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (_info == null)
