@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6428928970325853100}
   - component: {fileID: 6428928970325853101}
   - component: {fileID: 6428928970325853103}
-  - component: {fileID: 3947856224766047890}
+  - component: {fileID: -7567112866089842876}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Image 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,13 +92,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a4b7027e0b704fcd8ace3a78592e51f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _info: {fileID: 11400000, guid: 008167955dd1e43caa8554c7764152a8, type: 2}
-  _quantity: 2
+  _info: {fileID: 11400000, guid: 5ad0d91acedee48a89a69d0071f2eaed, type: 2}
+  _quantity: 5
   _maxCapacity: 10
   _imageItem: {fileID: 6428928970325853101}
   _nameItem: {fileID: 6428928971736762210}
   _quantityItem: {fileID: 6428928971544985380}
---- !u!114 &3947856224766047890
+--- !u!114 &-7567112866089842876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

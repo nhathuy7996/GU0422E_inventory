@@ -8,10 +8,11 @@ public class NormalItem : ItemInventoryBase
     [SerializeField] Image _imageItem;
     [SerializeField] Text _nameItem;
     [SerializeField] Text _quantityItem;
+  
     // Start is called before the first frame update
     void Start()
     {
-        
+      
     }
 
     // Update is called once per frame
