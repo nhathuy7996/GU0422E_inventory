@@ -25,9 +25,13 @@ public class DragController : Singleton<DragController>
         Vector2 mousePos = Input.mousePosition;
         _movingItem.transform.position = mousePos;
 
-        foreach ()
+        _targetSlot = null;
+        foreach (Transform t in InventoryManager.Instant.itemSlot)
         {
-
+            if(Vector2.Distance(_movingItem.transform.position,t.position)<= 50f)
+            {
+                _targetSlot = t;
+            }
         }
     }
 
@@ -44,12 +48,19 @@ public class DragController : Singleton<DragController>
     {
         if(_movingItem != null)
         {
-            // so sanh type item == slot
-            _movingItem.transform.SetParent(_parent);
-            _movingItem.transform.localPosition = Vector3.zero;
+            if (_targetSlot == null || _targetSlot.childCount != 0)
+            {
+                _movingItem.transform.SetParent(_parent);
+                _movingItem.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                _movingItem.transform.SetParent(_targetSlot);
+                _movingItem.transform.localPosition = Vector3.zero;
+            }
         }
         _movingItem = null;
-
+        _targetSlot = null;
 
     }
 

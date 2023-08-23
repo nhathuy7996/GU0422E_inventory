@@ -1644,6 +1644,7 @@ MonoBehaviour:
   _items:
   - {fileID: 6428928970325853103, guid: 129d55a8de9764c54926ff281b6c2062, type: 3}
   - {fileID: 6428928970325853103, guid: c1bd9a8a509604a06ae46d1597e41d52, type: 3}
+  - {fileID: 6428928970325853103, guid: d35ad0eb2c8564b619797e5d6858f08d, type: 3}
   _itemSlots: []
 --- !u!114 &697320724
 MonoBehaviour:
@@ -1755,6 +1756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movingItem: {fileID: 0}
+  _parent: {fileID: 0}
 --- !u!1 &750306351
 GameObject:
   m_ObjectHideFlags: 0
