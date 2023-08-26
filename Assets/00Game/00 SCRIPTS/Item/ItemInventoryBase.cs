@@ -8,6 +8,7 @@ public abstract class ItemInventoryBase : MonoBehaviour
 {
     [SerializeField]
     protected ItemDataSO _info;
+    public ItemDataSO info => _info;
     [SerializeField]
     protected int _quantity;
     public int quantity => _quantity;

@@ -69,6 +69,8 @@ public class InventoryManager : DVAH.Singleton<InventoryManager>
             item.transform.SetParent(slot);
             item.transform.localScale = Vector3.one;
             item.transform.localPosition = Vector3.zero;
+            item.GetComponent<RectTransform>().localScale = Vector3.one;
+
 
             EventTrigger g = item.GetComponent<EventTrigger>();
             var pDown = new EventTrigger.Entry
@@ -106,6 +108,84 @@ public class InventoryManager : DVAH.Singleton<InventoryManager>
         Destroy(item.gameObject);
     }
 
+
+    public void autoMerge()
+    {
+        int i = 0;
+        foreach (ItemInventoryBase item in _items)
+        {
+            
+            bool keepSearching = true;
+            while (_itemSlots[i].childCount > 0)
+            {
+                i++;
+                if (i >= _items.Count)
+                {
+                    keepSearching = false;
+                    break;
+                }
+            }
+            if (!keepSearching)
+            {
+                i = 0;
+                continue;
+            }
+            item.transform.SetParent(_itemSlots[i]);
+            item.transform.localPosition = Vector3.zero;
+            i = 0;
+        }
+    }
+
+    Dictionary<int, int> tmpItems = new Dictionary<int, int>();
+    public void autoMerge2()
+    {
+
+        tmpItems.Clear();
+        while (_items.Count > 0)
+        {
+            ItemInventoryBase item = _items[0];
+            if (!tmpItems.ContainsKey(item.info._ID))
+            {
+                tmpItems.Add(item.info._ID, item.quantity);
+                clearSlot(item);
+                continue;
+            }
+
+            tmpItems[item.info._ID] += item.quantity;
+            clearSlot(item);
+        }
+
+
+
+        StartCoroutine(waittCanvasUpdate());
+        
+
+        
+    }
+
+    IEnumerator waittCanvasUpdate()
+    {
+        yield return new WaitForEndOfFrame();
+        foreach (KeyValuePair<int, int> tmpItem in tmpItems)
+        {
+            int numSlot = tmpItem.Value / 10 + (tmpItem.Value % 10 != 0 ? 1 : 0);
+            for (int i = 0; i < numSlot - 1; i++)
+            {
+                DataManager.Instant.createItemOnInventory(tmpItem.Key, 10);
+            }
+            if (numSlot >= 1)
+            {
+                DataManager.Instant.createItemOnInventory(tmpItem.Key, tmpItem.Value % 10);
+                continue;
+            }
+
+            DataManager.Instant.createItemOnInventory(tmpItem.Key, tmpItem.Value);
+        }
+
+       
+    }
+
+    
     public string ItemsDataToJSON()
     {
         string data = "[";

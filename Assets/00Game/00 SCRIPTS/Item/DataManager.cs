@@ -26,19 +26,26 @@ public class DataManager : Singleton<DataManager>
         {
             int itemDataID = dataParsed[i]["ID"].AsInt;
             Debug.LogError(itemDataID +"--"+ dataParsed[i]["quantity"].AsInt);
-            ItemDataSO itemData = this.getDataItemByID(itemDataID);
-            if (itemData == null)
-            {
-                continue;
-            }
 
-
-            InventoryManager.Instant.setItemOnInventory(
-                Instantiate(_prefabItemInventory)
-                .UpdateInfo(itemData)
-                .UpdateQuantity(dataParsed[i]["quantity"].AsInt));
+            this.createItemOnInventory(itemDataID, dataParsed[i]["quantity"].AsInt);
         }
     }
+
+    public void createItemOnInventory(int ID, int quantiy)
+    {
+        ItemDataSO itemData = this.getDataItemByID(ID);
+        if (itemData == null)
+        {
+            return;
+        }
+
+
+        InventoryManager.Instant.setItemOnInventory(
+            Instantiate(_prefabItemInventory)
+            .UpdateInfo(itemData)
+            .UpdateQuantity(quantiy));
+    }
+
     // Start is called before the first frame update
     void Start()
     {
