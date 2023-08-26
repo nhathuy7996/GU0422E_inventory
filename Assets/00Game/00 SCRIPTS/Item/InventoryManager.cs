@@ -4,12 +4,13 @@ using UnityEngine;
 using DVAH;
 using UnityEngine.UI;
 using System.Linq;
-using UnityEngine.EventSystems;
-using Unity.VisualScripting;
-using UnityEditor.Events;
+using UnityEngine.EventSystems; 
+using System.Security.Cryptography;
+
 
 public class InventoryManager : DVAH.Singleton<InventoryManager>
 {
+    string PassParse = "Huynn";
     [SerializeField] Transform _gridLayput;
 
     [SerializeField] List<ItemInventoryBase> _items = new List<ItemInventoryBase>();
@@ -93,5 +94,34 @@ public class InventoryManager : DVAH.Singleton<InventoryManager>
             _items.Add(item);
             break;
         }
+    }
+
+    public void clearSlot(ItemInventoryBase item)
+    {
+        if (!_items.Contains(item))
+            return;
+
+
+        _items.Remove(item);
+        Destroy(item.gameObject);
+    }
+
+    public string ItemsDataToJSON()
+    {
+        string data = "[";
+
+        foreach (ItemInventoryBase item in _items)
+        {
+            if (item == null)
+                continue;
+            data += item.dataToString() +",";
+        }
+
+       // if (data.EndsWith(","))
+            data.Remove(data.Length - 1, 1);
+
+        data += "]";
+
+        return Security.Encrypt(data, PassParse);
     }
 }

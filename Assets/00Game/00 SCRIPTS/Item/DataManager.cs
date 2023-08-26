@@ -16,9 +16,10 @@ public class DataManager : Singleton<DataManager>
     void Init()
     {
         string data= PlayerPrefs.GetString("inventoryDatas");
-       
+        if (string.IsNullOrEmpty(data))
+            return;
 
-        var dataParsed = JSON.Parse(data);
+        var dataParsed = JSON.Parse(Security.Decrypt(data, "Huynn"));
 
       
         for (int i = 0; i < dataParsed.Count; i++)
@@ -54,6 +55,11 @@ public class DataManager : Singleton<DataManager>
 
         Debug.LogError($"ID {ID} not exist!");
         return null;
+    }
+
+    public void saveDataInventory()
+    {
+        PlayerPrefs.SetString("inventoryDatas", InventoryManager.Instant.ItemsDataToJSON());
     }
 
     private void OnDrawGizmosSelected()

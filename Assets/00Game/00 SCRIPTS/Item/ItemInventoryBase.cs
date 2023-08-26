@@ -28,7 +28,12 @@ public abstract class ItemInventoryBase : MonoBehaviour
         return this;
     }
 
-
+    public string dataToString()
+    {
+        return $"{{" +
+            $"\"ID\":{_info._ID}," +
+            $"\"quantity\":{this._quantity}  }}";
+    }
 }
 
 

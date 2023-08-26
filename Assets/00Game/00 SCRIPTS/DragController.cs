@@ -53,7 +53,7 @@ public class DragController : Singleton<DragController>
         _movingItem = null;
         _targetSlot = null;
 
-
+        DataManager.Instant.saveDataInventory();
     }
 
     void CheckTargetSlot()
@@ -79,7 +79,7 @@ public class DragController : Singleton<DragController>
         ItemInventoryBase movingItem = _movingItem.GetComponent<ItemInventoryBase>();
         if(itemInSlot.quantity + movingItem.quantity <= itemInSlot.maxCapacity)
         {
-            Destroy(_movingItem.gameObject);
+            InventoryManager.Instant.clearSlot(movingItem);
             itemInSlot.UpdateQuantity(itemInSlot.quantity + movingItem.quantity);
             return;
         }
