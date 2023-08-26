@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info: {fileID: 11400000, guid: 008167955dd1e43caa8554c7764152a8, type: 2}
-  _quantity: 9
+  _quantity: 8
   _maxCapacity: 10
   _imageItem: {fileID: 6428928970325853101}
   _nameItem: {fileID: 6428928971736762210}
