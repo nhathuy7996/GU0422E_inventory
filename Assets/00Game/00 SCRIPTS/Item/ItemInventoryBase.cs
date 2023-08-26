@@ -15,10 +15,20 @@ public abstract class ItemInventoryBase : MonoBehaviour
     protected int _maxCapacity;
     public int maxCapacity => _maxCapacity;
 
-    public virtual void UpdateQuantity(int newQuantity)
+    public virtual ItemInventoryBase UpdateInfo(ItemDataSO itemInfo)
+    {
+        //valid
+        _info = itemInfo;
+        return this;
+    }
+
+    public virtual ItemInventoryBase UpdateQuantity(int newQuantity)
     {
         _quantity = newQuantity;
+        return this;
     }
+
+
 }
 
 

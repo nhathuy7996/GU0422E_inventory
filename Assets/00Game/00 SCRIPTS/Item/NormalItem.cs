@@ -25,18 +25,33 @@ public class NormalItem : ItemInventoryBase
         
     }
 
-    public override void UpdateQuantity(int newQuantity)
+    public override ItemInventoryBase UpdateInfo(ItemDataSO itemInfo)
     {
-        base.UpdateQuantity(newQuantity);
-        _quantityItem.text = this._quantity.ToString();
+        base.UpdateInfo(itemInfo);
+        updateView();
+
+        return this;
     }
 
-    private void OnDrawGizmosSelected()
+    public override ItemInventoryBase UpdateQuantity(int newQuantity)
+    {
+        base.UpdateQuantity(newQuantity);
+        updateView();
+
+        return this;
+    }
+
+    void updateView()
     {
         if (_info == null)
             return;
         _imageItem.sprite = _info._image;
         _nameItem.text = _info._name;
         _quantityItem.text = this._quantity.ToString();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        this.updateView();
     }
 }

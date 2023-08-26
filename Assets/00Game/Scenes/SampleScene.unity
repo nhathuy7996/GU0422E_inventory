@@ -1641,10 +1641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridLayput: {fileID: 65069157}
-  _items:
-  - {fileID: 6428928970325853103, guid: 129d55a8de9764c54926ff281b6c2062, type: 3}
-  - {fileID: 6428928970325853103, guid: c1bd9a8a509604a06ae46d1597e41d52, type: 3}
-  - {fileID: 6428928970325853103, guid: d35ad0eb2c8564b619797e5d6858f08d, type: 3}
+  _items: []
   _itemSlots: []
 --- !u!114 &697320724
 MonoBehaviour:
@@ -1658,7 +1655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa457aa204d944e385b172e205f463d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _genaralDataItems:
+  _prefabItemInventory: {fileID: 0}
+  _generalDataItems:
   - {fileID: 11400000, guid: 008167955dd1e43caa8554c7764152a8, type: 2}
   - {fileID: 11400000, guid: 5ad0d91acedee48a89a69d0071f2eaed, type: 2}
 --- !u!114 &697320725

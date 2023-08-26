@@ -8,9 +8,11 @@ using SimpleJSON;
 public class DataManager : Singleton<DataManager>
 {
     [Header("----------------Items------------")]
-    [SerializeField] List<ItemDataSO> _genaralDataItems = new List<ItemDataSO>();
-    public List<ItemDataSO> genaralDataItems => _genaralDataItems;
+    [SerializeField] ItemInventoryBase _prefabItemInventory;
 
+    [SerializeField] List<ItemDataSO> _generalDataItems = new List<ItemDataSO>();
+    public List<ItemDataSO> genaralDataItems => _generalDataItems;
+   
     void Init()
     {
         string data= PlayerPrefs.GetString("inventoryDatas");
@@ -18,9 +20,22 @@ public class DataManager : Singleton<DataManager>
 
         var dataParsed = JSON.Parse(data);
 
+      
         for (int i = 0; i < dataParsed.Count; i++)
         {
-            Debug.LogError(dataParsed[i]["ID"].AsInt +"--"+ dataParsed[i]["quantity"].AsInt);
+            int itemDataID = dataParsed[i]["ID"].AsInt;
+            Debug.LogError(itemDataID +"--"+ dataParsed[i]["quantity"].AsInt);
+            ItemDataSO itemData = this.getDataItemByID(itemDataID);
+            if (itemData == null)
+            {
+                continue;
+            }
+
+
+            InventoryManager.Instant.setItemOnInventory(
+                Instantiate(_prefabItemInventory)
+                .UpdateInfo(itemData)
+                .UpdateQuantity(dataParsed[i]["quantity"].AsInt));
         }
     }
     // Start is called before the first frame update
@@ -29,14 +44,20 @@ public class DataManager : Singleton<DataManager>
         Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    public ItemDataSO getDataItemByID(int ID)
     {
-        
+        foreach (ItemDataSO item in _generalDataItems)
+        {
+            if (ID == item._ID)
+                return item;
+        }
+
+        Debug.LogError($"ID {ID} not exist!");
+        return null;
     }
 
     private void OnDrawGizmosSelected()
     {
-        _genaralDataItems = Resources.LoadAll<ItemDataSO>("Items").ToList();
+        _generalDataItems = Resources.LoadAll<ItemDataSO>("Items").ToList();
     }
 }

@@ -53,6 +53,7 @@ public class DragController : Singleton<DragController>
         _movingItem = null;
         _targetSlot = null;
 
+
     }
 
     void CheckTargetSlot()
